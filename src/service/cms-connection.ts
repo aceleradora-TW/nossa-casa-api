@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
-dotenv.config();
 import axios from 'axios';
+
+dotenv.config();
+
 
 export const clientCms = axios.create({
   baseURL:process.env.URL_CMS,

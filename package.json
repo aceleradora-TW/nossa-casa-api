@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Nossa Casa",
   "main": "index.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/index.ts",
     "test": "jest ./test",

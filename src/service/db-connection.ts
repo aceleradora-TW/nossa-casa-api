@@ -1,28 +1,26 @@
 import "reflect-metadata"
-import { createConnection, ConnectionOptions } from "typeorm"
+import { DataSource } from "typeorm"
+require('dotenv').config();
 
-export const connect = async () => {
-  const local = !process.env.DATABASE_URL
-  const url =
-    process.env.DATABASE_URL ||
-    "postgres://postgres:1234@localhost:5432/nossa_casa"
+export const connect = () => {
 
-  const options: ConnectionOptions = {
+  const AppDataSource = new DataSource({
     type: "postgres",
-    name: "default",
-    url,
+    host:  process.env.HOST || "localhost",
+    port: 5432,
+    username: process.env.USERNAME || "postgres" ,
+    password: process.env.PASSWORD || "1234",
+    database: process.env.DATABASE || "nossa_casa",
     synchronize: true,
+    logging: true,
     entities: ["**/models/**/*{.ts,.js}"],
-    migrations: ["src/models/migration/**/*.ts"],
     subscribers: ["src/models/subscriber/**/*.ts"],
-    cli: {
-      entitiesDir: "src/models/entity",
-      migrationsDir: "src/models/migration",
-      subscribersDir: "src/models/subscriber",
-    },
-  }
+    migrations: ["src/models/migration/**/*.ts"],
+  })
 
-  await createConnection(
-    local ? options : { ...options, ssl: { rejectUnauthorized: false } }
-  )
+  AppDataSource.initialize()
+    .then(() => {
+      // here you can start to work with your database
+    })
+    .catch((error) => console.log(error))
 }

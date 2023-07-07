@@ -9,7 +9,7 @@ import { requestLogger, requestErrorLogger, logger } from "./logger"
 const start = async () => {
   try {
     logger.info("Establishing database connection...")
-    await connect()
+    connect()
     logger.info("Database connection established!")
 
     logger.info("Starting application server...")
